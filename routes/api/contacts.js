@@ -6,7 +6,7 @@ const contactsOperations = require('../../model')
 const joiSchema = Joi.object({
   name: Joi.string().required(),
   email: Joi.string().email().required(),
-  phone: Joi.string().length(15).pattern(/^\d+$/).required(),
+  phone: Joi.string().pattern(/^\d+$/).required(),
 })
 
 const router = express.Router()
