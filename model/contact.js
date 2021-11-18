@@ -21,7 +21,7 @@ const contactSchema = Schema({
 const joiSchema = Joi.object({
   name: Joi.string().required(),
   email: Joi.string().email().required(),
-  phone: Joi.string().min(10).pattern(/^[0-9]+$/).required(),
+  phone: Joi.string().min(10).pattern(/^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/).required(),
   favorite: Joi.boolean(),
 })
 
