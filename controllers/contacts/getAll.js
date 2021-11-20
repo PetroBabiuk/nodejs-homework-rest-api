@@ -1,6 +1,6 @@
 const { Contact } = require('../../model')
 
-const getAll = async (_, res) => {
+const getAll = async (req, res) => {
   const result = await Contact.find({})
   res.json({
     status: 'success',
