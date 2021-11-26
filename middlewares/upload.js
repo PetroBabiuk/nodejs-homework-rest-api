@@ -1,3 +1,4 @@
+const { BadRequest } = require('http-errors')
 const multer = require('multer')
 const path = require('path')
 
@@ -15,8 +16,24 @@ const uploadConfig = multer.diskStorage({
   }
 })
 
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === 'image/png' ||
+    file.mimetype === 'image/jpg' ||
+    file.mimetype === 'image/jpeg'
+  ) {
+    cb(null, true)
+  } else {
+    cb(
+      new BadRequest('Only images with JPEG, JPG or PNG format <= 16Mb'),
+      false
+    )
+  }
+}
+
 const upload = multer({
-  storage: uploadConfig
+  storage: uploadConfig,
+  fileFilter
 })
 
 module.exports = upload
