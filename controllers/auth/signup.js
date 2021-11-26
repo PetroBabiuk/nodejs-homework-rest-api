@@ -16,14 +16,13 @@ const signup = async (req, res) => {
   }
 
   const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
-  const avatarURL = gravatar.url(email)
+  const avatarURLWithoutHTTP = gravatar.url(email)
+  const avatarURL = `http:${avatarURLWithoutHTTP}`
   const newUser = await User.create({
     email,
     password: hashPassword,
     avatarURL
   })
-  console.log(avatarsDir)
-  console.log(newUser._id)
   const userFolder = path.join(avatarsDir, String(newUser._id))
   await fs.mkdir(userFolder)
   res.status(201).json({
