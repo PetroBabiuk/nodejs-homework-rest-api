@@ -16,8 +16,7 @@ const signup = async (req, res) => {
   }
 
   const hashPassword = bcrypt.hashSync(password, bcrypt.genSaltSync(10))
-  const avatarURLWithoutHTTP = gravatar.url(email)
-  const avatarURL = `http:${avatarURLWithoutHTTP}`
+  const avatarURL = gravatar.url(email, { protocol: 'https' })
   const newUser = await User.create({
     email,
     password: hashPassword,
