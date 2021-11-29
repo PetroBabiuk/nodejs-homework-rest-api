@@ -2,6 +2,7 @@ const express = require('express')
 
 const { auth: ctrl } = require('../../controllers')
 const {
+  upload,
   authenticate,
   validation,
   controllerWrapper
@@ -17,5 +18,12 @@ router.post('/login', validation(joiSchema), controllerWrapper(ctrl.login))
 router.post('/logout', authenticate, controllerWrapper(ctrl.logout))
 
 router.get('/current', authenticate, controllerWrapper(ctrl.current))
+
+router.patch(
+  '/avatars',
+  authenticate,
+  upload.single('avatarURL'),
+  controllerWrapper(ctrl.updateAvatar)
+)
 
 module.exports = router
