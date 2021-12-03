@@ -12,7 +12,7 @@ const repeatVerify = async (req, res) => {
   if (!user) {
     throw new NotFound('User not found')
   }
-  if (!user.verify) {
+  if (user.verify) {
     throw new BadRequest('Verification has already been passed')
   }
   const mail = {
