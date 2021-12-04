@@ -1,4 +1,4 @@
-const { Unauthorized } = require('http-errors')
+const { Unauthorized, BadRequest } = require('http-errors')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
@@ -13,6 +13,9 @@ const login = async (req, res) => {
   const user = await User.findOne({ email })
   if (!user) {
     throw new Unauthorized('Email or password is wrong')
+  }
+  if (!user.verify) {
+    throw new BadRequest('Sorry, but your email was not verified')
   }
 
   const compareResult = bcrypt.compareSync(password, user.password)
